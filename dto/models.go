@@ -127,11 +127,11 @@ type Response struct {
 }
 
 // NewSuccessResponse returns a new success response
-func NewResponse(statusCode int, statusText string, responseBody []byte) *Response {
+func NewResponse(statusCode int, responseBody []byte) *Response {
 	return &Response{
 		Success:      true,
+		StatusText:   "Success",
 		StatusCode:   statusCode,
-		StatusText:   statusText,
 		ResponseBody: responseBody,
 	}
 }
