@@ -3,8 +3,6 @@ package services
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/ochom/gttp"
 )
 
 // Authenticate requests auth token from server
@@ -25,25 +23,22 @@ func Authenticate(username, password string) (string, error) {
 	}
 
 	url := getURL() + "/auth/login"
-
-	res, status, err := gttp.NewRequest(url, headers, body).Post()
+	res, err := requestDo(url, headers, body)
 	if err != nil {
 		return "", err
 	}
 
-	if status != 200 {
-		return "", fmt.Errorf("status code: %d, %s", status, string(res))
-	}
-
-	var resp map[string]any
-	if err := json.Unmarshal(res, &resp); err != nil {
+	var response map[string]string
+	err = json.Unmarshal(res.ResponseBody, &response)
+	if err != nil {
 		return "", err
 	}
 
-	val, ok := resp["token"]
+	val, ok := response["accessToken"]
 	if !ok {
-		return "", fmt.Errorf("token not found in response")
+		return "", fmt.Errorf("access token not found")
 	}
 
-	return fmt.Sprintf("%v", val), nil
+	return val, nil
+
 }

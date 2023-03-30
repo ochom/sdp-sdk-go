@@ -2,10 +2,8 @@ package services
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 
-	"github.com/ochom/gttp"
 	"github.com/ochom/sdk-go/dto"
 )
 
@@ -50,16 +48,7 @@ func Subscribe(accessToken string, req *dto.SubscriptionRequest) (*dto.Response,
 
 	url := getURL() + "public/SDP/activate"
 
-	res, status, err := gttp.NewRequest(url, headers, body).Post()
-	if err != nil {
-		return nil, err
-	}
-
-	if status != 200 {
-		return nil, fmt.Errorf("status code: %d, %s", status, string(res))
-	}
-
-	return dto.NewResponse(status, "Okay", res), nil
+	return requestDo(url, headers, body)
 }
 
 // UnSubscribe requests un-subscription from server
@@ -99,14 +88,5 @@ func UnSubscribe(accessToken string, req *dto.SubscriptionRequest) (*dto.Respons
 
 	url := getURL() + "public/SDP/deactivate"
 
-	res, status, err := gttp.NewRequest(url, headers, body).Post()
-	if err != nil {
-		return nil, err
-	}
-
-	if status != 200 {
-		return nil, fmt.Errorf("status code: %d, %s", status, string(res))
-	}
-
-	return dto.NewResponse(status, "Okay", res), nil
+	return requestDo(url, headers, body)
 }
