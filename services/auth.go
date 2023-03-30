@@ -23,17 +23,11 @@ func Authenticate(username, password string) (string, error) {
 		return "", err
 	}
 
-	var response map[string]string
-	err = json.Unmarshal(res.ResponseBody, &response)
-	if err != nil {
-		return "", err
-	}
-
-	val, ok := response["token"]
+	val, ok := res.ResponseBody["token"]
 	if !ok {
 		return "", fmt.Errorf("access token not found")
 	}
 
-	return val, nil
+	return val.(string), nil
 
 }

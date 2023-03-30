@@ -120,14 +120,14 @@ func (r *SubscriptionRequest) Validate() error {
 
 // Response is the response body for all endpoints
 type Response struct {
-	Success      bool   `json:"success"`
-	StatusCode   int    `json:"statusCode"`
-	StatusText   string `json:"statusText"`
-	ResponseBody []byte `json:"responseBody"`
+	Success      bool           `json:"success"`
+	StatusCode   int            `json:"statusCode"`
+	StatusText   string         `json:"statusText"`
+	ResponseBody map[string]any `json:"responseBody"`
 }
 
 // NewSuccessResponse returns a new success response
-func NewResponse(statusCode int, responseBody []byte) *Response {
+func NewResponse(statusCode int, responseBody map[string]any) *Response {
 	return &Response{
 		Success:      true,
 		StatusText:   "Success",
