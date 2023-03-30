@@ -21,7 +21,7 @@ func authMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// set allowed headers
 		ctx.Header("Access-Control-Allow-Origin", "*")
-		ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, x-api-key")
 		ctx.Header("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
 
 		if ctx.Request.Method == "OPTIONS" {
@@ -29,13 +29,13 @@ func authMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		xcsrf := ctx.GetHeader("X-CSRF-Token")
+		xcsrf := ctx.GetHeader("x-api-key")
 		if xcsrf == "" {
 			ctx.AbortWithStatus(401)
 			return
 		}
 
-		xtoken := os.Getenv("X-CSRF-TOKEN")
+		xtoken := os.Getenv("ACCESS_TOKEN")
 		if xtoken != xcsrf {
 			ctx.AbortWithStatus(401)
 			return
