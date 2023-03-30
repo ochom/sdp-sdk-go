@@ -41,6 +41,19 @@ func newHttpClient() (*http.Client, error) {
 // requestDo
 func requestDo(url string, headers map[string]string, body []byte) (*dto.Response, error) {
 
+	defaultHeaders := map[string]string{
+		"Content-Type":     "application/json",
+		"X-Requested-With": "XMLHttpRequest",
+	}
+
+	if headers == nil {
+		headers = defaultHeaders
+	} else {
+		for k, v := range defaultHeaders {
+			headers[k] = v
+		}
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 

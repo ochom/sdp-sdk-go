@@ -52,7 +52,6 @@ func SendPremiumSms(accessToken string, data *dto.PremiumSmsRequest) (*dto.Respo
 
 	headers := map[string]string{
 		"X-Authorization": "Bearer " + accessToken,
-		"Content-Type":    "application/json",
 	}
 
 	url := getURL() + "/public/SDP/sendSMSRequest"
@@ -84,7 +83,6 @@ func SendBulkSms(accessToken string, data *dto.BulkSmsRequest) (*dto.Response, e
 
 	headers := map[string]string{
 		"X-Authorization": "Bearer " + accessToken,
-		"Content-Type":    "application/json",
 	}
 
 	url := getURL() + "/public/CMS/bulksms"

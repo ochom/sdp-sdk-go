@@ -38,7 +38,6 @@ func Subscribe(accessToken string, req *dto.SubscriptionRequest) (*dto.Response,
 
 	headers := map[string]string{
 		"X-Authorization": "Bearer " + accessToken,
-		"Content-Type":    "application/json",
 	}
 
 	body, err := json.Marshal(data)
@@ -78,7 +77,6 @@ func UnSubscribe(accessToken string, req *dto.SubscriptionRequest) (*dto.Respons
 
 	headers := map[string]string{
 		"X-Authorization": "Bearer " + accessToken,
-		"Content-Type":    "application/json",
 	}
 
 	body, err := json.Marshal(data)

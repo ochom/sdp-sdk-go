@@ -17,13 +17,8 @@ func Authenticate(username, password string) (string, error) {
 		return "", err
 	}
 
-	headers := map[string]string{
-		"Content-Type": "application/json",
-		"Accept":       "application/json",
-	}
-
 	url := getURL() + "/auth/login"
-	res, err := requestDo(url, headers, body)
+	res, err := requestDo(url, nil, body)
 	if err != nil {
 		return "", err
 	}
