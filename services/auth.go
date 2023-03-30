@@ -29,7 +29,7 @@ func Authenticate(username, password string) (string, error) {
 		return "", err
 	}
 
-	val, ok := response["accessToken"]
+	val, ok := response["token"]
 	if !ok {
 		return "", fmt.Errorf("access token not found")
 	}
