@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -87,5 +88,12 @@ func requestDo(url string, headers map[string]string, body []byte) (*dto.Respons
 		return nil, fmt.Errorf("status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
-	return dto.NewResponse(200, bodyBytes), nil
+	var resp map[string]any
+	err = json.Unmarshal(bodyBytes, &resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return dto.NewResponse(200, resp), nil
+
 }
