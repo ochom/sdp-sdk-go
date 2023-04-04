@@ -29,5 +29,4 @@ func Authenticate(username, password string) (string, error) {
 	}
 
 	return val.(string), nil
-
 }
